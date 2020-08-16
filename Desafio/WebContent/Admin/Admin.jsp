@@ -37,7 +37,6 @@ if ((request.getSession(false).getAttribute("Admin") == null)) {
 						</tr>
 					</thead>
 					<tbody>
-
 						<c:forEach items="${ requestScope.listar}" var="empresa">
 							<tr>
 								<td>${empresa.idEmpresa }</td>
