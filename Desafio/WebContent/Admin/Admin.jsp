@@ -9,7 +9,6 @@
 
 </head>
 <%
-	//In case, if Admin session is not set, redirect to Login page
 if ((request.getSession(false).getAttribute("Admin") == null)) {
 %>
 <jsp:forward page="/JSP/Login.jsp"></jsp:forward>
@@ -22,8 +21,46 @@ if ((request.getSession(false).getAttribute("Admin") == null)) {
 	<center>
 			<h2>Admin's Home</h2>
 		</center>
-	
-</div>
+			<div>
+		<table class="table table-striped table-bordered table-hover"
+					id="tabla">
+					<thead class="table-dark">
+						<tr>
+							<th>Codigo del autor</th>
+							<th>Nombre del autor</th>
+							<th>Nacionalidad</th>
+							<th>Operaciones</th>
+							<th>Operaciones</th>
+							<th>Operaciones</th>
+							<th>Operaciones</th>
+							<th>Operaciones</th>
+						</tr>
+					</thead>
+					<tbody>
+
+						<c:forEach items="${ requestScope.listar}" var="empresa">
+							<tr>
+								<td>${empresa.idEmpresa }</td>
+								<td>${empresa.nombreEmpresa}</td>
+								<td>${empresa.comision}</td>
+								<td>${empresa.direcciion}</td>
+								<td>${empresa.Nombrecontacto}</td>
+								<td>${empresa.telefono}</td>
+								<td>${empresa.correo}</td>
+								<td>${empresa.password}</td>
+								
+							<!-- 	<td><a class="btn btn-primary"
+									href="${pageContext.request.contextPath}/autores.do?op=obtener&id=${empresa.codigoAutor}">
+										<span class="glyphicon glyphicon-edit"></span> Editar
+								</a> <a class="btn btn-danger"
+									href="javascript:eliminar('${empresa.codigoAutor}')"> <span
+										class="glyphicon glyphicontrash"></span> Eliminar
+								</a></td> -->
+							</tr>
+						</c:forEach>
+					</tbody>
+				</table>
+		</div>
 	
 </body>
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
