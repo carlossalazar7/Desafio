@@ -7,6 +7,7 @@
 	<link rel="stylesheet" href="css/style.css">
 <title>Admin Page</title>
 
+<%@ include file="cabecera.jsp"%>
 </head>
 <%
 if ((request.getSession(false).getAttribute("Admin") == null)) {
@@ -18,22 +19,28 @@ if ((request.getSession(false).getAttribute("Admin") == null)) {
 <body>
 <%@ include file="navbar/navbar.jsp"%>
 <div class="container">
-	<center>
-			<h2>Admin's Home</h2>
-		</center>
-			<div>
-		<table class="table table-striped table-bordered table-hover"
+<br>
+		<div>	
+			<h3 class="mx-auto text-center">Lista de Empresas Ofertantes</h3>
+ 
+ 		<a type="button" class="btn btn-primary btn-md "
+					href="<%=request.getContextPath()%>/EmpresasOfertantes?op=nuevo"> Agregar nueva Empresa</a>
+ 				<br/><br/>
+	
+		<table class="table table-striped table-bordered w-75 mx-auto table-hover"
 					id="tabla">
-					<thead class="table-dark">
+					<thead class="table table-dark">
 						<tr>
 							<th>Codigo del autor</th>
 							<th>Nombre del autor</th>
-							<th>Nacionalidad</th>
-							<th>Operaciones</th>
-							<th>Operaciones</th>
-							<th>Operaciones</th>
-							<th>Operaciones</th>
-							<th>Operaciones</th>
+							<th>Comisión</th>
+							<th>Dirreción</th>
+							<th>Nombre Contacto</th>
+							<th>Telefono</th>
+							<th>Correo</th>
+							<th>Contraseña</th>
+							<th>Editar</th>
+							<th>Eliminar</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -47,21 +54,45 @@ if ((request.getSession(false).getAttribute("Admin") == null)) {
 								<td>${empresa.telefono}</td>
 								<td>${empresa.correo}</td>
 								<td>${empresa.password}</td>
-								
-							<!-- 	<td><a class="btn btn-primary"
-									href="${pageContext.request.contextPath}/autores.do?op=obtener&id=${empresa.codigoAutor}">
+								<td><a class="btn btn-primary"
+									href="<%=request.getContextPath()%>/EmpresasOfertantes?op=obtener&id=${empresa.codigoAutor}">
 										<span class="glyphicon glyphicon-edit"></span> Editar
-								</a> <a class="btn btn-danger"
-									href="javascript:eliminar('${empresa.codigoAutor}')"> <span
-										class="glyphicon glyphicontrash"></span> Eliminar
-								</a></td> -->
+								</a></td>
+								<td> <a class="btn btn-danger" 	href="javascript:eliminar('${empresa.codigoAutor}')"> <span class="glyphicon glyphicontrash"></span> Eliminar
+								</a></td>
 							</tr>
 						</c:forEach>
 					</tbody>
 				</table>
 		</div>
 	
-</body>
+</body> <script>
+        	
+        $(document).ready(function(){
+    	 	$('#tabla').DataTable();
+    	 });
+    	 
+    	 <c:if test="${not empty exito}">
+    	 	alertify.success('${exito}');
+    	 	<c:set var="exito" value="" scope="session" />
+    	 
+    	 </c:if>
+    	 
+    	 <c:if test="${not empty fracaso}">
+    	 	alertify.error('${fracaso}');
+    		<c:set var="fracaso" value="" scope="session" />
+    	 
+    	</c:if>
+		
+    	function eliminar(id){
+   		 alertify.confirm("¿Realmente decea eliminar esta Empress?", function(e){
+   	 	if(e){
+   	 		location.href="EmpresasOfertantes?op=eliminar&id="+ id;
+   	 	}
+   	 });
+   	 }
+        </script>
+        
 	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
 		integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
 		crossorigin="anonymous"></script>
