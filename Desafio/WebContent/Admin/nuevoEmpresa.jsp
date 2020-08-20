@@ -20,7 +20,7 @@ if ((request.getSession(false).getAttribute("Admin") == null)) {
 <%@ include file="navbar/navbar.jsp"%>
 <div class="container">
 <br>
-		<div>	
+		<div class="w-50 mx-auto float-center bg-light">	
 			<form role="form" action="<%=request.getContextPath()%>/EmpresasOfertantes" method="POST">
  						<input type="hidden" name="op" value="insertar">
  							<div class="well well-sm">
@@ -29,8 +29,8 @@ if ((request.getSession(false).getAttribute("Admin") == null)) {
  								</strong>
  							</div>
  							
-							<div class="form-group">
- 								<label for="nombre">Nombre del Genero</label>
+							<div class="form-group w-50 mx-auto">
+ 								<label for="nombre">Nombre de la empresa</label>
  								<div class="input-group">
  									<input type="text" class="form-control" name="nombre"
 											id="nombre" value="${genero.nombreGenero}" 
@@ -40,18 +40,94 @@ if ((request.getSession(false).getAttribute("Admin") == null)) {
  										</span>
  								</div>
  							</div>
- 							<div class="form-group">
- 								<label for="contacto">Descripcion del genero:</label>
+ 							<div class="form-group w-50 mx-auto">
+ 								<label for="contacto">Comisión:</label>
  								<div class="input-group">
-											<textarea rows="5" cols="10" class="form-control" id="contacto"
-											value="${genero.descripcion}" name="nacionalidad" 
-											placeholder="Ingresa uan descripcion del genero" ></textarea>
- 									<span class="input-group-addon">
- 										<span class="glyphicon glyphicon-asterisk"></span>
- 									</span>
+									<input type="text" class="form-control" name="nombre"
+											id="nombre" value="${genero.nombreGenero}" 
+											placeholder="Ingresa el nombre del Genero" >
+ 										<span class="input-group-addon">
+ 											<span class="glyphicon glyphicon-asterisk"></span>
+ 										</span>
  								</div>
  							</div>
-
+ 							<div class="form-group w-50 mx-auto">
+ 								<label for="nombre">Dirección:</label>
+ 								<div class="input-group">
+ 									<input type="text" class="form-control" name="nombre"
+											id="nombre" value="${genero.nombreGenero}" 
+											placeholder="Ingresa el nombre del Genero" >
+ 										<span class="input-group-addon">
+ 											<span class="glyphicon glyphicon-asterisk"></span>
+ 										</span>
+ 								</div>
+ 							</div>
+ 							<div class="form-group w-50 mx-auto">
+ 								<label for="nombre">Contacto:</label>
+ 								<div class="input-group">
+ 									<input type="text" class="form-control" name="nombre"
+											id="nombre" value="${genero.nombreGenero}" 
+											placeholder="Ingresa el nombre del Genero" >
+ 										<span class="input-group-addon">
+ 											<span class="glyphicon glyphicon-asterisk"></span>
+ 										</span>
+ 								</div>
+ 							</div>
+ 							<div class="form-group w-50 mx-auto">
+ 								<label for="nombre">Telefono:</label>
+ 								<div class="input-group">
+ 									<input type="text" class="form-control" name="nombre"
+											id="nombre" value="${genero.nombreGenero}" 
+											placeholder="Ingresa el nombre del Genero" >
+ 										<span class="input-group-addon">
+ 											<span class="glyphicon glyphicon-asterisk"></span>
+ 										</span>
+ 								</div>
+ 							</div>
+ 							<div class="form-group w-50 mx-auto">
+ 								<label for="nombre">Correo:</label>
+ 								<div class="input-group">
+ 									<input type="text" class="form-control" name="nombre"
+											id="nombre" value="${genero.nombreGenero}" 
+											placeholder="Ingresa el nombre del Genero" >
+ 										<span class="input-group-addon">
+ 											<span class="glyphicon glyphicon-asterisk"></span>
+ 										</span>
+ 								</div>
+ 							</div>
+ 							<div class="form-group w-50 mx-auto">
+ 								<label for="nombre">Dirección:</label>
+ 								<div class="input-group">
+ 									<input type="text" class="form-control" name="nombre"
+											id="nombre" value="${genero.nombreGenero}" 
+											placeholder="Ingresa el nombre del Genero" >
+ 										<span class="input-group-addon">
+ 											<span class="glyphicon glyphicon-asterisk"></span>
+ 										</span>
+ 								</div>
+ 							</div>
+ 							<div class="form-group w-50 mx-auto">
+ 								<label for="nombre">Rubro:</label>
+ 								<div class="input-group">
+ 									<input type="text" class="form-control" name="nombre"
+											id="nombre" value="${genero.nombreGenero}" 
+											placeholder="Ingresa el nombre del Genero" >
+ 										<span class="input-group-addon">
+ 											<span class="glyphicon glyphicon-asterisk"></span>
+ 										</span>
+ 								</div>
+ 							</div>
+						<div class="form-group w-50 mx-auto">
+ 								<label for="nombre">Password:</label>
+ 								<div class="input-group">
+ 									<input type="text" class="form-control" name="nombre"
+											id="nombre" value="${genero.nombreGenero}" 
+											placeholder="Ingresa el nombre del Genero" >
+ 										<span class="input-group-addon">
+ 											<span class="glyphicon glyphicon-asterisk"></span>
+ 										</span>
+ 								</div>
+ 							</div>
 	 						<input type="submit" class="btn btn-info" value="Guardar" name="Guardar">
  								<a class="btn btn-danger" href="${pageContext.request.contextPath}/EmpresasOfertantes?op=listar">Cancelar</a>
  						</form>
