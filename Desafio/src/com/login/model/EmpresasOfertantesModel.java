@@ -19,14 +19,13 @@ public class EmpresasOfertantesModel extends DBConnection {
 	Statement statement = null;
 	ResultSet resultSet = null;
 
-	public List<EmpresasOfertantesBean> listar() throws SQLException {
-
+	public List<EmpresasOfertantesBean> listarEmpresa() throws SQLException {
 		try {
 			con = DBConnection.createConnection();
 			statement = con.createStatement();
 			resultSet = statement.executeQuery("select * from empresas");
 
-			List<EmpresasOfertantesBean> lista = new ArrayList<>();
+			List<EmpresasOfertantesBean> lista = new ArrayList<EmpresasOfertantesBean>();
 			while (resultSet.next()) {
 				EmpresasOfertantesBean empresa = new EmpresasOfertantesBean();
 				empresa.setIdEmpresa(resultSet.getString("idEmpresa"));
@@ -38,7 +37,7 @@ public class EmpresasOfertantesModel extends DBConnection {
 				empresa.setCorreo(resultSet.getString("correo"));
 				empresa.setIdRubro(resultSet.getInt("idRubro"));
 				empresa.setPassword(resultSet.getString("password"));
-				String pass = resultSet.getString("password");
+				String pass = resultSet.getString("correo");
 				lista.add(empresa);
 				System.out.println(pass);
 			}

@@ -21,6 +21,7 @@ if ((request.getSession(false).getAttribute("Admin") == null)) {
 <div class="container">
 <br>
 		<div class="w-50 mx-auto float-center bg-light">	
+		<h1 class="text-center">Agregar nueva empresa</h1>
 			<form role="form" action="<%=request.getContextPath()%>/EmpresasOfertantes" method="POST">
  						<input type="hidden" name="op" value="insertar">
  							<div class="well well-sm">
@@ -109,8 +110,14 @@ if ((request.getSession(false).getAttribute("Admin") == null)) {
  							<div class="form-group w-50 mx-auto">
  								<label for="nombre">Rubro:</label>
  								<div class="input-group">
+ 						<c:forEach items="${requestScope.nuevo}" var="generos">
+ 							<tr>
+ 								<td>${generos.idRubro}</td>
+ 								<td>${generos.nombreRubro}</td>
+							 </tr>
+ 						</c:forEach>
  									<input type="text" class="form-control" name="nombre"
-											id="nombre" value="${genero.nombreGenero}" 
+											id="nombre" value="${genero.RubroBean}" 
 											placeholder="Ingresa el nombre del Genero" >
  										<span class="input-group-addon">
  											<span class="glyphicon glyphicon-asterisk"></span>

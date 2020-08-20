@@ -1,9 +1,10 @@
+package com.login.controller;
+
 /*
 * To change this license header, choose License Headers in Project Properties.
 * To change this template file, choose Tools | Templates
 * and open the template in the editor.
 */
-package com.login.controller;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -21,13 +22,9 @@ import javax.servlet.http.HttpServletResponse;
 import com.login.bean.EmpresasOfertantesBean;
 import com.login.model.*;
 
-@WebServlet(name = "EmpresasOfertantes", urlPatterns = { "/EmpresasOfertantes" })
-public class EmpresasOfertantes extends HttpServlet {
+@WebServlet(name = "Rubro", urlPatterns = { "/Rubro" })
+public class Rubro extends HttpServlet {
 
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
 	EmpresasOfertantesModel modelo = new EmpresasOfertantesModel();
 	RubrosModel modelo1 = new RubrosModel();
 	ArrayList<String> listaErrores = new ArrayList<>();
@@ -48,7 +45,7 @@ public class EmpresasOfertantes extends HttpServlet {
 				listar(request, response);
 				break;
 			case "nuevo":
-				nuevo(request, response);
+				request.getRequestDispatcher("/Admin/nuevoRubro.jsp").forward(request, response);
 				break;
 			case "insertar":
 				insertar(request, response);
@@ -112,18 +109,8 @@ public class EmpresasOfertantes extends HttpServlet {
 
 	private void listar(HttpServletRequest request, HttpServletResponse response) {
 		try {
-			request.setAttribute("listar", modelo.listarEmpresa());
+			request.setAttribute("listar", modelo.listar());
 			request.getRequestDispatcher("Admin/Admin.jsp").forward(request, response);
-		} catch (SQLException | ServletException | IOException ex) {
-			Logger.getLogger(EmpresasOfertantesModel.class.getName()).log(Level.SEVERE, null, ex);
-			System.out.println("Error al cargar");
-		}
-	}
-	
-	private void nuevo(HttpServletRequest request, HttpServletResponse response) {
-		try {
-			request.setAttribute("RubroBean", modelo1.listar());
-			request.getRequestDispatcher("/Admin/nuevoEmpresa.jsp").forward(request, response);
 		} catch (SQLException | ServletException | IOException ex) {
 			Logger.getLogger(EmpresasOfertantesModel.class.getName()).log(Level.SEVERE, null, ex);
 		}
@@ -138,15 +125,15 @@ public class EmpresasOfertantes extends HttpServlet {
 			if (listaErrores.size() > 0) {
 				request.setAttribute("listaErrores", listaErrores);
 				request.setAttribute("genero", miGenero);
-				request.getRequestDispatcher("/EmpresasOfertantes?op=nuevo").forward(request, response);
+				request.getRequestDispatcher("EmpresasOfertantes?op=nuevo").forward(request, response);
 			} else {
 				if (modelo.insertarEmpresa(miGenero) > 0) {
-					request.getSession().setAttribute("exito", "empresa registrado exitosamente");
-					response.sendRedirect(request.getContextPath() + "/EmpresasOfertantes?op=listar");
+					request.getSession().setAttribute("exito", "Genero registrado exitosamente");
+					response.sendRedirect(request.getContextPath() + "/generos.do?op=listar");
 				} else {
 					request.getSession().setAttribute("fracaso",
 							"El genro no ha sido ingresado" + "ya hay un genro con este codigo");
-					response.sendRedirect(request.getContextPath() + "/EmpresasOfertantes?op=listar");
+					response.sendRedirect(request.getContextPath() + "/generos.do?op=listar");
 				}
 			}
 		} catch (IOException | SQLException | ServletException ex) {
