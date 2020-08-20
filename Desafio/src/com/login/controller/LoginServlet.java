@@ -46,7 +46,7 @@ public class LoginServlet extends HttpServlet {
 				System.out.println("Admin2's Home");
 
 				HttpSession session = request.getSession();
-				session.setAttribute("Admin", userName);
+				session.setAttribute("Editor", userName);
 				request.setAttribute("usuarioEmpleado", userName);
 
 				request.getRequestDispatcher("/Admin2/Admin2.jsp").forward(request, response);

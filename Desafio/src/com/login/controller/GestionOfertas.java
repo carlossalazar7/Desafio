@@ -14,7 +14,7 @@ import java.util.logging.Logger;
 import com.login.bean.*;
 import com.login.model.*;
 
-@WebServlet(name = "GestionOfertas", urlPatterns = { "/GestionOfertas" })
+@WebServlet(name = "GestionOfertas", urlPatterns = { "/GestionOfertas.do" })
 public class GestionOfertas extends HttpServlet{
 	
 	OfertasModel ofertas = new OfertasModel();
@@ -36,7 +36,7 @@ public class GestionOfertas extends HttpServlet{
 				listar(request, response);
 				break;
 			case "nuevo":
-				request.getRequestDispatcher("/Admin/nuevoEmpresa.jsp").forward(request, response);
+				request.getRequestDispatcher("/Admin2/nuevaOferta.jsp").forward(request, response);
 				break;
 			case "insertar":
 				insertar(request, response);
@@ -91,10 +91,10 @@ public class GestionOfertas extends HttpServlet{
 
 		private void listar(HttpServletRequest request, HttpServletResponse response) {
 			try {
-				request.setAttribute("listar", ofertas.listar());
+				request.setAttribute("listarOfertas", ofertas.listar());
 				request.getRequestDispatcher("Admin2/Admin2.jsp").forward(request, response);
 			} catch (SQLException | ServletException | IOException ex) {
-				Logger.getLogger(EmpresasOfertantesModel.class.getName()).log(Level.SEVERE, null, ex);
+				Logger.getLogger(OfertasModel.class.getName()).log(Level.SEVERE, null, ex);
 			}
 		}
 
@@ -102,83 +102,34 @@ public class GestionOfertas extends HttpServlet{
 			try {
 
 				OfertasBean miOferta = new OfertasBean();
-				miOferta.setNombreOferta((request.getParameter("nombre")));
-
-				if (listaErrores.size() > 0) {
-					request.setAttribute("listaErrores", listaErrores);
-					request.setAttribute("genero", miGenero);
-					request.getRequestDispatcher("EmpresasOfertantes?op=nuevo").forward(request, response);
-				} else {
-					if (modelo.insertarEmpresa(miGenero) > 0) {
-						request.getSession().setAttribute("exito", "Genero registrado exitosamente");
-						response.sendRedirect(request.getContextPath() + "/generos.do?op=listar");
+				miOferta.setNombreOferta(request.getParameter("nombre"));
+				miOferta.setPrecioNormal(Float.parseFloat(request.getParameter("precion")));
+				miOferta.setPrecioOferta(Float.parseFloat(request.getParameter("preciof")));
+				miOferta.setFechaInicio(request.getParameter("fechai"));
+				miOferta.setFechaFinal(request.getParameter("fechaf"));
+				miOferta.setCantidadCupones(Integer.parseInt(request.getParameter("cupones")));
+				miOferta.setDescripcion(request.getParameter("descripcion"));
+				miOferta.setEstado("En espera");
+				miOferta.setFechaLimite(request.getParameter("fechal"));
+				miOferta.setJustificacion("En espera");
+				miOferta.setIdEmpresa(request.getParameter("empresa"));
+		
+				
+					
+				
+					if (ofertas.insertar(miOferta)> 0) {
+						request.getSession().setAttribute("exito", "Oferta registrada exitosamente");
+						response.sendRedirect(request.getContextPath() + "/GestionOfertas.do?op=listar");
 					} else {
-						request.getSession().setAttribute("fracaso",
-								"El genro no ha sido ingresado" + "ya hay un genro con este codigo");
-						response.sendRedirect(request.getContextPath() + "/generos.do?op=listar");
+						request.getSession().setAttribute("fracaso","La oferta no ha sido ingresado");
+						response.sendRedirect(request.getContextPath() + "/GestionOferta.do?op=listar");
 					}
-				}
+					request.getRequestDispatcher("/GestionOfertas.do?op=nuevo").forward(request, response);
 			} catch (IOException | SQLException | ServletException ex) {
 				Logger.getLogger(EmpresasOfertantesModel.class.getName()).log(Level.SEVERE, null, ex);
 			}
 		}
 
-		private void obtener(HttpServletRequest request, HttpServletResponse response) {
-			try {
-				String codigo = request.getParameter("id");
-				EmpresasOfertantesBean miGenero = modelo.obtenerEmpresa(codigo);
-				if (miGenero != null) {
-					request.setAttribute("genero", miGenero);
-					request.getRequestDispatcher("/Admin/editarEmpresa.jsp").forward(request, response);
-				} else {
-					response.sendRedirect(request.getContextPath() + "/error404.jsp");
-				}
-			} catch (SQLException | IOException | ServletException ex) {
-				Logger.getLogger(EmpresasOfertantesModel.class.getName()).log(Level.SEVERE, null, ex);
-			}
-		}
-
-		private void modificar(HttpServletRequest request, HttpServletResponse response) {
-
-			try {
-				listaErrores.clear();
-				EmpresasOfertantesBean empresa = new EmpresasOfertantesBean();
-				empresa.setIdEmpresa(request.getParameter("idEmpresa"));
-
-				if (listaErrores.size() > 0) {
-					request.setAttribute("listaErrores", listaErrores);
-					request.setAttribute("genero", empresa);
-					request.getRequestDispatcher("/EmpresasOfertantes?op=obtener").forward(request, response);
-				} else {
-					if (modelo.modificarEmpresa(empresa) > 0) {
-						request.getSession().setAttribute("exito", "genero modificado exitosamente");
-						response.sendRedirect(request.getContextPath() + "/EmpresasOfertantes?op=listar");
-					} else {
-						request.getSession().setAttribute("fracaso",
-								"El Genero no ha sido modificado" + " ya hay un Genero con este codigo");
-						response.sendRedirect(request.getContextPath() + "/EmpresasOfertantes?op=listar");
-					}
-				}
-			} catch (IOException | SQLException | ServletException ex) {
-				Logger.getLogger(EmpresasOfertantesModel.class.getName()).log(Level.SEVERE, null, ex);
-			}
-		}
-
-		private void eliminar(HttpServletRequest request, HttpServletResponse response) {
-			try {
-				String codigo = request.getParameter("id");
-				if (modelo.eliminarEmpresa(codigo) > 0) {
-					request.setAttribute("exito", "Empresa  eliminado exitosamente");
-
-				} else {
-					request.setAttribute("fracaso", "No se puede eliminar esta Empresa");
-				}
-				request.getRequestDispatcher("/EmpresasOfertantes?op=listar").forward(request, response);
-			} catch (SQLException | ServletException | IOException ex) {
-				Logger.getLogger(EmpresasOfertantesModel.class.getName()).log(Level.SEVERE, null, ex);
-			}
-		}
-
-	
+		
 			
 }

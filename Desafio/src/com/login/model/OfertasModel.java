@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import com.login.bean.*;
-import com.login.util.DBConnection;
+import com.login.util.*;
 
 
 
@@ -19,33 +19,36 @@ public class OfertasModel extends DBConnection {
 	Statement statement = null;
 	ResultSet resultSet = null;
 	
+	
 	public List<OfertasBean> listar() throws SQLException{
 		
 		try {
 			
 			con = DBConnection.createConnection();
 			statement = con.createStatement();
-			resultSet = statement.executeQuery("select * from promocion");
+			resultSet = statement.executeQuery("select * from empresas");
+		
+		
 
 			List<OfertasBean> lista = new ArrayList<>();
-			while (resultSet.next()) {
+			while (rs.next()) {
 				OfertasBean oferta = new OfertasBean();
-				oferta.setidPromocion(resultSet.getInt("idPromocion"));
-				oferta.setNombreOferta(resultSet.getString("titulo"));
-				oferta.setPrecioNormal(resultSet.getFloat("PrecioRegular"));
-				oferta.setPrecioOferta(resultSet.getFloat("PrecioOferta"));
-				oferta.setFechaInicio(resultSet.getString("FechaInicio"));
-				oferta.setFechaFinal(resultSet.getString("FechaFinal"));
-				oferta.setCantidadCupones(resultSet.getInt("CantidadCupones"));
-				oferta.setDescripcion(resultSet.getString("Descripcion"));
-				oferta.setEstado(resultSet.getString("estado"));
-				oferta.setFechaLimite(resultSet.getString("fechaLimite"));
-				oferta.setJustificacion(resultSet.getString("justificacion"));
-				oferta.setIdEmpresa(resultSet.getString("idEmpresa"));
+				oferta.setidPromocion(rs.getInt("idPromocion"));
+				oferta.setNombreOferta(rs.getString("titulo"));
+				oferta.setPrecioNormal(rs.getFloat("PrecioRegular"));
+				oferta.setPrecioOferta(rs.getFloat("PrecioOferta"));
+				oferta.setFechaInicio(rs.getString("FechaInicio"));
+				oferta.setFechaFinal(rs.getString("FechaFinal"));
+				oferta.setCantidadCupones(rs.getInt("CantidadCupones"));
+				oferta.setDescripcion(rs.getString("Descripcion"));
+				oferta.setEstado(rs.getString("estado"));
+				oferta.setFechaLimite(rs.getString("fechaLimite"));
+				oferta.setJustificacion(rs.getString("justificacion"));
+				oferta.setIdEmpresa(rs.getString("idEmpresa"));
 				
-				String pass = resultSet.getString("titulo");
+			
 				lista.add(oferta);
-				System.out.println(pass);
+			
 			}
 			this.desconectar();
 			return lista;
@@ -56,12 +59,12 @@ public class OfertasModel extends DBConnection {
 		}
 	}
 		
-		public int insertarOferta(OfertasBean oferta) throws SQLException {
+		public int insertar(OfertasBean oferta) throws SQLException {
 			try {
 
 				int filasAfectadas = 0;
 				String sql = "CALL insertarOferta(?,?,?,?,?,?,?,?,?,?,?)";
-				cs = con.prepareCall(sql);
+				cs = conexion.prepareCall(sql);
 				cs.setString(1, oferta.getNombreOferta());
 				cs.setFloat(2, oferta.getPrecioNormal());
 				cs.setFloat(3, oferta.getPrecioOferta());

@@ -9,7 +9,13 @@
 
 <%@ include file="cabecera.jsp"%>
 </head>
-
+<%
+if ((request.getSession(false).getAttribute("Editor") == null)) {
+%>
+<jsp:forward page="/JSP/Login.jsp"></jsp:forward>
+<%
+	}
+%>
 <body>
 <%@ include file="navbar/navbar.jsp"%>
 <div class="container">
@@ -18,7 +24,7 @@
 			<h3 class="mx-auto text-center">Lista de Ofertas</h3>
  
  		<a type="button" class="btn btn-primary btn-md "
-					href="<%=request.getContextPath()%>/GestionOfertas?op=nuevo"> Agregar nueva Oferta</a>
+					href="<%=request.getContextPath()%>/GestionOfertas.do?op=nuevo"> Agregar nueva Oferta</a>
  				<br/><br/>
 	
 		<table class="table table-striped table-bordered w-75 mx-auto table-hover"
@@ -42,25 +48,25 @@
 						</tr>
 					</thead>
 					<tbody>
-						<c:forEach items="${ requestScope.listar}" var="oferta">
+						<c:forEach items="${requestScope.listarOfertas}" var="oferta">
 							<tr>
 								<td>${oferta.idPromocion }</td>
-								<td>${oferta.titulo}</td>
-								<td>${oferta.PrecioRegular}</td>
-								<td>${oferta.PrecioOferta}</td>
-								<td>${oferta.FechaInicio}</td>
-								<td>${oferta.FechaFinal}</td>
-								<td>${oferta.CantidadCupones}</td>
-								<td>${oferta.Descripcion}</td>								
+								<td>${oferta.nombreOferta}</td>
+								<td>${oferta.precioNormal}</td>
+								<td>${oferta.precioOferta}</td>
+								<td>${oferta.fechaInicio}</td>
+								<td>${oferta.fechaFinal}</td>
+								<td>${oferta.cantidadCupones}</td>
+								<td>${oferta.descripcion}</td>								
 								<td>${oferta.estado}</td>
 								<td>${oferta.fechaLimite}</td>								
 								<td>${oferta.justificacion}</td>
 								<td>${oferta.idEmpresa}</td>
 								<td><a class="btn btn-primary"
-									href="<%=request.getContextPath()%>/EmpresasOfertantes?op=obtener&id=${empresa.codigoAutor}">
+									href="<%=request.getContextPath()%>/GestionOfertas.do?op=obtener&id=${oferta.idPromocion}">
 										<span class="glyphicon glyphicon-edit"></span> Editar
 								</a></td>
-								<td> <a class="btn btn-danger" 	href="javascript:eliminar('${empresa.codigoAutor}')"> <span class="glyphicon glyphicontrash"></span> Eliminar
+								<td> <a class="btn btn-danger" 	href="javascript:eliminar('${oferta.idPromocion}')"> <span class="glyphicon glyphicontrash"></span> Eliminar
 								</a></td>
 							</tr>
 						</c:forEach>
@@ -87,7 +93,7 @@
     	</c:if>
 		
     	function eliminar(id){
-   		 alertify.confirm("¿Realmente decea eliminar esta Oferta?", function(e){
+   		 alertify.confirm("¿Realmente decea eliminar esta Empress?", function(e){
    	 	if(e){
    	 		location.href="GestionOfertas?op=eliminar&id="+ id;
    	 	}
@@ -106,5 +112,4 @@
 		src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
 		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
 		crossorigin="anonymous"></script>
-</html>
 </html>
