@@ -1,3 +1,4 @@
+
 import java.net.Authenticator;
 import java.net.PasswordAuthentication;
 import java.util.Date;
@@ -26,13 +27,13 @@ public class RecuperarClave {
         properties.put("mail.smtp.ssl.trust", host);
 
         // se crea una autenticación
-        Authenticator auth = new Authenticator() {
+        Authenticator Authenticator = new Authenticator() {
             public PasswordAuthentication getPasswordAuthentication() {
                 return new PasswordAuthentication(userName, password);
             }
         };
 
-        //Session session = Session.getDefaultInstance(properties, auth);
+        Session session = Session.(properties, Authenticator);
 
         // se crea un nuevo email
         Message msg = new MimeMessage(session);
