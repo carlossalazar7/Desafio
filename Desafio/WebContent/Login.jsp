@@ -33,7 +33,7 @@
 			</div>
 			<div class="form-group form-check w-75 mx-auto">
 			
-				<label class="form-check-label " for="exampleCheck1"><a href="#">Olvido su contraseña?</a></label>
+				<label class="form-check-label " for="exampleCheck1"><a href="recuperarcontraseña.jsp">Olvido su contraseña?</a></label>
 				<label class="form-check-label " for="exampleCheck1"><a href="#">Crear cuenta</a></label>
 			
 			</div>

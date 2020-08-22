@@ -59,7 +59,11 @@ public class LoginServlet extends HttpServlet {
 				request.setAttribute("usuarioEmpleado", userName);
 
 				request.getRequestDispatcher("/User/User.jsp").forward(request, response);
-			} else {
+			}
+
+						
+			
+			else {
 				System.out.println("Error message = " + userValidate);
 				request.setAttribute("errMessage", userValidate);
 
